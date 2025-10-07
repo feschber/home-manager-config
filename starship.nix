@@ -116,6 +116,7 @@
         style = "bg:color_blue";
         format = "[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)";
       };
+
       c = {
         symbol = " ";
         style = "bg:color_blue";
@@ -126,7 +127,7 @@
         symbol = " ";
         style = "bg:color_blue";
         format = "[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)";
-        };
+      };
 
       rust = {
         symbol = "";
@@ -164,6 +165,12 @@
         format = "[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)";
       };
 
+      # nix = {
+        # symbol = "󱄅";
+        # style = "bg:color_blue";
+        # format = "[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)";
+      # };
+
       python = {
         symbol = "";
         style = "bg:color_blue";
@@ -191,6 +198,10 @@
         time_format = "%R";
         style = "bg:color_bg1";
         format = "[[  $time ](fg:color_fg0 bg:color_bg1)]($style)";
+      };
+
+      nix_shell = {
+        enabled = true;
       };
 
       line_break = {
