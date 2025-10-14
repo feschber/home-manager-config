@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    pkgs.nerd-fonts.caskaydia-mono
+  home.packages = with pkgs.nerd-fonts; [
+    caskaydia-mono
   ];
 }
