@@ -26,6 +26,7 @@
   # environment.
   home.packages = with pkgs; [
     nil
+    nixd
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -85,6 +86,9 @@
   # enable flakes
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 }
