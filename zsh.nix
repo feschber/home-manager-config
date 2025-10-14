@@ -11,4 +11,17 @@
     . "$HOME/.cargo/env"
     '';
   };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  
+  programs.eza = {
+    enable = true;
+    colors = "auto";
+    enableZshIntegration = true;
+    git = true;
+    icons = "auto";
+  };
 }
