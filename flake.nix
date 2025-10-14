@@ -20,8 +20,8 @@
     homeConfigurations = {
       "feschber" = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { system = "aarch64-darwin"; };
-	modules = [ ./home.nix ];
-	extraSpecialArgs = inputs;
+        modules = [ ./home.nix ];
+        extraSpecialArgs = inputs;
       };
     };
 
