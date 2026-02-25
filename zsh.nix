@@ -6,21 +6,30 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    autocd = true;
+    defaultKeymap = "emacs";
+
+    shellAliases = {
+        pacs = "pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S";
+        yays = "yay -Slq | fzf --multi --preview 'yay -Si {1}' | xargs -ro yay -S";
+        parus = "paru -Slq | fzf --multi --preview 'paru -Si {1}' | xargs -ro paru -S";
+
+        pacrm = "pacman -Qqs | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -Rns";
+        uefi = "sudo systemctl reboot --firmware-setup";
+        rr = "curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash";
+        ll = "ls -l";
+        la = "ls -lah";
+        v = "nvim";
+        update = "nix flake update --flake ~/nixos-config; nixos-rebuild switch --flake ~/nixos-config";
+        nd = "nix develop -c zsh";
+        y = "yazi";
+    };
+
 
     envExtra = ''
-    [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+      [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
     '';
-    shellAliases = {
-      ll = "ls -l";
-      v = "nvim";
-      update = "nix flake update --flake ~/nixos-config; nixos-rebuild switch --flake ~/nixos-config";
-      nd = "nix develop -c zsh";
-      y = "yazi";
-    };
-    initContent = ''
-      bindkey -e
-      source "$HOME/.p10k.zsh"
-    '';
+
     history = {
       size = 100000;
       path = "${config.xdg.dataHome}/zsh/history";

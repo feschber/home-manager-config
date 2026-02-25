@@ -1,5 +1,26 @@
 { nixvim, pkgs, ... }:
 
+let
+  tree-sitter-e2 = {
+    language = "e2";
+    version = "0330380ca817bfb3164c5461d8057eba4c30b7d1";
+    src = pkgs.fetchFromGitHub {
+      owner = "mrdgo";
+      repo = "tree-sitter-e2";
+      rev = "0330380ca817bfb3164c5461d8057eba4c30b7d1";
+      hash = "sha256-xVrpviC7rO523eFIdEigqPjgVK+rUVLilfMDvl9IUv0=";
+    };
+  };
+
+  e2grammar = pkgs.tree-sitter.buildGrammar tree-sitter-e2;
+
+  e2plugin = pkgs.fetchFromGitHub {
+    owner = "mrdgo";
+    repo = "e2.nvim";
+    rev = "9b5063a26eab61a6206765fec69840f310405ff0";
+    hash = "sha256-lDeXVuJHCbjx3lWRW2+uTimOGy7bGptxizXDUHlRm7g=";
+  };
+in
 {
   imports = [
     nixvim.homeModules.nixvim
@@ -15,6 +36,13 @@
 
 
   programs.nixvim = {
+    autoCmd = [
+      {
+        event = [ "BufRead" "BufNewFile" ];
+        pattern = [ "*.e2" ];
+        command = "set filetype=e2";
+      }
+    ];
     enable = true;
     colorschemes.gruvbox.enable = true;
     opts = {
@@ -31,7 +59,11 @@
       colorizer.enable = true;
       treesitter = {
         enable = true;
+        settings = {
+          highlight.enable = true;
+        };
         grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+          e2grammar
           bash
           json
           lua
@@ -49,12 +81,14 @@
           c
           cpp
         ];
+        autoInstall = true;
       };
       lsp = {
         enable = true;
         autoLoad = true;
         inlayHints = true;
         servers = {
+          bashls.enable = true;
           nil_ls.enable = true;
           rust_analyzer = {
             enable = true;
@@ -102,5 +136,8 @@
       yuck-vim
       nvim-treesitter-parsers.yuck
     ];
+    extraConfigLua = ''
+      vim.opt.runtimepath:append("${e2plugin}")
+    '';
   };
 }
