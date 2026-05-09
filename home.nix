@@ -11,7 +11,7 @@
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = username;
-  home.homeDirectory = if pkgs.stdenv.isDarwn
+  home.homeDirectory = if pkgs.stdenv.isDarwin
     then "/Users/${username}"
     else "/home/${username}";
 
