@@ -17,7 +17,7 @@
       nd = "nix develop -c zsh";
       y = "yazi";
     };
-    initExtra = ''
+    initContent = ''
       bindkey -e
       source "$HOME/.p10k.zsh"
     '';
