@@ -29,6 +29,7 @@
         + "$kotlin"
         + "$haskell"
         + "$python"
+        + "$direnv"
         + "[](fg:color_blue bg:color_bg3)"
         + "$docker_context"
         + "$conda"
