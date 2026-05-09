@@ -217,6 +217,10 @@
         vimcmd_replace_symbol = "[](bold fg:color_purple)";
         vimcmd_visual_symbol = "[](bold fg:color_yellow)";
       };
+
+      direnv = {
+        disabled = false;
+      };
     };
   };
 }
