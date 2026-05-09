@@ -15,15 +15,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixvim, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixvim, home-manager, ... }@inputs:
 
-    homeConfigurations = {
-      "feschber" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { system = "aarch64-darwin"; };
-        modules = [ ./home.nix ];
-        extraSpecialArgs = inputs;
+    let
+      mkHome = system: home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { inherit system; };
+        modules = [ ./home.nix ] ;
+        extraSpecialArgs = inputs // { username = "feschber"; };
+      };
+    in
+    {
+      homeConfigurations = {
+        "feschber@macbook" = mkHome "aarch64-darwin";
+        "feschber@iridium" = mkHome "x86_64-darwin";
+        "feschber@thorium" = mkHome "x86_64-darwin";
       };
     };
-
-  };
 }

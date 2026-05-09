@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, lib, username, osConfig, ... }:
 
 {
   imports = [
@@ -88,10 +88,10 @@
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  programs.home-manager.enable = osConfig == null;
 
   # enable flakes
-  nix = {
+  nix = lib.mkIf (osConfig == null) {
     package = pkgs.nix;
     settings.experimental-features = [
       "nix-command"
