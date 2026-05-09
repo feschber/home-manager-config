@@ -1,4 +1,4 @@
-{ ... }:
+{ config, pkgs, ... }:
 
 {
   programs.zsh = {
@@ -10,6 +10,31 @@
     envExtra = ''
     . "$HOME/.cargo/env"
     '';
+    shellAliases = {
+      ll = "ls -l";
+      v = "nvim";
+      update = "nix flake update --flake ~/nixos-config; nixos-rebuild switch --flake ~/nixos-config";
+      nd = "nix develop -c zsh";
+      y = "yazi";
+    };
+    initExtra = ''
+      bindkey -e
+      source "$HOME/.p10k.zsh"
+    '';
+    history = {
+      size = 100000;
+      path = "${config.xdg.dataHome}/zsh/history";
+    };
+  };
+
+  programs.git = {
+    enable = true;
+    lfs.enable = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.fzf = {
@@ -24,4 +49,27 @@
     git = true;
     icons = "auto";
   };
+
+  home.packages = with pkgs; [
+    ripgrep
+    jq
+    gron
+    wget
+    curl
+    tmux
+    htop
+    gh
+  ];
+  
+  fonts.packages = with pkgs; [
+    libre-baskerville
+    font-awesome
+    font-awesome_5
+    nerd-fonts.fira-mono
+    nerd-fonts.caskaydia-mono
+  ];
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+
 }

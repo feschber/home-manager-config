@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   imports = [
@@ -10,8 +10,11 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "feschber";
-  home.homeDirectory = "/Users/feschber";
+  home.username = username;
+  home.homeDirectory = if pkgs.stdenv.isDarwn
+    then "/Users/${username}"
+    else "/home/${username}";
+
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -81,6 +84,8 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
   };
+
+  home.sessionPath = [ "$HOME/.cargo/bin" ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
