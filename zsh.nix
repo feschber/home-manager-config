@@ -61,14 +61,6 @@
     gh
   ];
   
-  fonts.packages = with pkgs; [
-    libre-baskerville
-    font-awesome
-    font-awesome_5
-    nerd-fonts.fira-mono
-    nerd-fonts.caskaydia-mono
-  ];
-
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
