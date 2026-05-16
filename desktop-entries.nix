@@ -1,4 +1,4 @@
-{}:
+{ ... }:
 {
   boot_windows = {
     name = "Boot Windows";
