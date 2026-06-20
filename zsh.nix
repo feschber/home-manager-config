@@ -20,7 +20,7 @@
         ll = "ls -l";
         la = "ls -lah";
         v = "nvim";
-        update = "nix flake update --flake ~/nixos-config; nixos-rebuild switch --flake ~/nixos-config";
+        update = "nix flake update --flake ~/nixos-config; sudo nixos-rebuild switch --flake ~/nixos-config";
         nd = "nix develop -c zsh";
         y = "yazi";
     };
