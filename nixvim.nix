@@ -81,7 +81,6 @@ in
           c
           cpp
         ];
-        autoInstall = true;
       };
       lsp = {
         enable = true;
