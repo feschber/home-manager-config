@@ -1,4 +1,4 @@
-{ nixvim, pkgs, ... }:
+{ config, nixvim, pkgs, ... }:
 
 let
   tree-sitter-e2 = {
@@ -62,7 +62,13 @@ in
         settings = {
           highlight.enable = true;
         };
-        grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        # Must come from the *configured* nvim-treesitter package, not from
+        # pkgs.vimPlugins.nvim-treesitter: nixpkgs only strips a grammar's
+        # bundled upstream queries when it recognises it as one of that exact
+        # package's own grammars. Mixing packages leaves e.g. tree-sitter-nix's
+        # repo queries in place, and those target the old nvim-treesitter query
+        # API (`#is-not? local`), which errors on every .nix file.
+        grammarPackages = with config.programs.nixvim.plugins.treesitter.package.builtGrammars; [
           e2grammar
           bash
           json
@@ -137,15 +143,6 @@ in
     ];
     extraConfigLua = ''
       vim.opt.runtimepath:append("${e2plugin}")
-
-      -- tree-sitter-nix ships highlights.scm using the legacy nvim-treesitter
-      -- predicate `(#is-not? local)`, which neither nvim core nor the rewritten
-      -- nvim-treesitter registers anymore. Without a handler the highlighter
-      -- errors on every .nix file containing a builtin. Treating every match as
-      -- non-local just means shadowed builtins keep their builtin highlight.
-      vim.treesitter.query.add_predicate("is-not?", function()
-        return true
-      end, { force = true, all = false })
     '';
   };
 }
