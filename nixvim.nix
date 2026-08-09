@@ -137,6 +137,15 @@ in
     ];
     extraConfigLua = ''
       vim.opt.runtimepath:append("${e2plugin}")
+
+      -- tree-sitter-nix ships highlights.scm using the legacy nvim-treesitter
+      -- predicate `(#is-not? local)`, which neither nvim core nor the rewritten
+      -- nvim-treesitter registers anymore. Without a handler the highlighter
+      -- errors on every .nix file containing a builtin. Treating every match as
+      -- non-local just means shadowed builtins keep their builtin highlight.
+      vim.treesitter.query.add_predicate("is-not?", function()
+        return true
+      end, { force = true, all = false })
     '';
   };
 }
