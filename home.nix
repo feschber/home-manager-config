@@ -7,6 +7,7 @@
     ./starship.nix
     ./zsh.nix
     ./desktop-entries.nix
+    ./zed.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -90,21 +91,6 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = osConfig == null;
-
-  # enable zed
-  programs.zed-editor = {
-    enable = true;
-    userSettings = {
-      assistant = {
-        enabled = true;
-        version = "2";
-        default_model = {
-          provider = "anthropic"; # or "zed" if using built-in routing
-          model = "claude-3-5-sonnet-latest";
-        };
-      };
-    };
-  };
 
   # enable flakes
   nix = lib.mkIf (osConfig == null) {
